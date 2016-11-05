@@ -6,6 +6,7 @@ import (
 	"os"
 	"os/exec"
 
+	"github.com/gorilla/handlers"
 	"github.com/urfave/cli"
 )
 
@@ -44,10 +45,10 @@ func main() {
 
 		fmt.Printf("listening on %v\n", address)
 
-		return http.ListenAndServe(address, &CommandHandler{
+		return http.ListenAndServe(address, handlers.LoggingHandler(os.Stdout, &CommandHandler{
 			Command: command,
 			Args:    args,
-		})
+		}))
 	}
 
 	app.Run(os.Args)
