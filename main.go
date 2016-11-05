@@ -9,6 +9,19 @@ import (
 	"github.com/urfave/cli"
 )
 
+type CommandHandler struct {
+	Command string
+	Args    []string
+}
+
+func (this *CommandHandler) ServeHTTP(response http.ResponseWriter, request *http.Request) {
+	cmd := exec.Command(this.Command, this.Args...)
+	if err := cmd.Run(); err != nil {
+		http.Error(response, err.Error(), 500)
+		return
+	}
+}
+
 func main() {
 	app := cli.NewApp()
 	app.Name = "hookie"
@@ -31,14 +44,10 @@ func main() {
 
 		fmt.Printf("listening on %v\n", address)
 
-		return http.ListenAndServe(address, http.HandlerFunc(func(response http.ResponseWriter, request *http.Request) {
-			cmd := exec.Command(command, args...)
-			if err := cmd.Run(); err != nil {
-				fmt.Printf("command execution failed: %v", err.Error())
-				http.Error(response, err.Error(), 500)
-				return
-			}
-		}))
+		return http.ListenAndServe(address, &CommandHandler{
+			Command: command,
+			Args:    args,
+		})
 	}
 
 	app.Run(os.Args)
