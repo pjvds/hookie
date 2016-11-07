@@ -1,7 +1,9 @@
 package main
 
 import (
+	"bytes"
 	"fmt"
+	"io"
 	"net/http"
 	"os"
 	"os/exec"
@@ -17,15 +19,18 @@ type CommandHandler struct {
 
 func (this *CommandHandler) ServeHTTP(response http.ResponseWriter, request *http.Request) {
 	cmd := exec.Command(this.Command, this.Args...)
-	cmd.Stdout = os.Stdout
-	cmd.Stderr = os.Stderr
+	buffer := new(bytes.Buffer)
+
+	cmd.Stdout = io.MultiWriter(os.Stdout, buffer)
+	cmd.Stderr = io.MultiWriter(os.Stderr, buffer)
 	cmd.Stdin = request.Body
 
 	if err := cmd.Run(); err != nil {
 		fmt.Println(err)
-		http.Error(response, err.Error(), 500)
-		return
+		response.WriteHeader(500)
 	}
+
+	buffer.WriteTo(response)
 }
 
 func main() {
