@@ -55,7 +55,12 @@ func main() {
 			handler = handlers.LoggingHandler(os.Stdout, handler)
 		}
 
-		return http.ListenAndServe(address, handler)
+		if err := http.ListenAndServe(address, handler); err != nil {
+			fmt.Printf("listen failure: %v\n", err)
+			return err
+		}
+
+		return nil
 	}
 
 	app.Run(os.Args)

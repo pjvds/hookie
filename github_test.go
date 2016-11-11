@@ -38,7 +38,7 @@ func TestGithubSecretValidator(t *testing.T) {
 		invoked = true
 	})
 
-	request := MustRawRequest(raw)
+	request := mustRawRequest(raw)
 	response := httptest.NewRecorder()
 
 	sut := GithubSecretValidator{
