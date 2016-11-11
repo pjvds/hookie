@@ -23,6 +23,10 @@ func main() {
 			Name:  "github-secret",
 			Usage: "validates the incoming request with the X-Hub-Signature header value set by Github",
 		},
+		cli.BoolTFlag{
+			Name:  "access-log",
+			Usage: "print access log to stdout",
+		},
 	}
 	app.Action = func(ctx *cli.Context) error {
 		if len(ctx.Args()) == 0 {
@@ -34,20 +38,24 @@ func main() {
 		args := ctx.Args()[1:]
 
 		fmt.Printf("servning on %v\n", address)
-    handler := &CommandHandler{
+		handler := http.Handler(&CommandHandler{
 			Command: command,
 			Args:    args,
+		})
+
+		if secret := ctx.String("github-secret"); len(secret) > 0 {
+			fmt.Printf("github signature validation enabled\n")
+			handler = &GithubSecretValidator{
+				Secret:  []byte(secret),
+				Handler: handler,
+			}
 		}
 
-    if secret := ctx.String("github-secret"); len(secret) > 0{
-      fmt.Printf("github signature validation enabled\n")
-      handler := &GithubSecretValidator{
-        Secret: []byte(secret),
-        Handler: handler,
-      }
-    }
+		if log := ctx.BoolT("access-log"); log {
+			handler = handlers.LoggingHandler(os.Stdout, handler)
+		}
 
-		return http.ListenAndServe(address, handlers.LoggingHandler(os.Stdout, handlers.LoggingHandler(os.Stdout, handler))
+		return http.ListenAndServe(address, handler)
 	}
 
 	app.Run(os.Args)
