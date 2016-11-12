@@ -45,7 +45,7 @@ func main() {
 
 		if secret := ctx.String("github-secret"); len(secret) > 0 {
 			fmt.Printf("github signature validation enabled\n")
-			handler = &GithubSecretValidator{
+			handler = &GithubSignatureValidator{
 				Secret:  []byte(secret),
 				Handler: handler,
 			}

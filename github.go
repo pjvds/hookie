@@ -13,7 +13,7 @@ import (
 	"strings"
 )
 
-type GithubSecretValidator struct {
+type GithubSignatureValidator struct {
 	Handler http.Handler
 	Secret  []byte
 }
@@ -48,7 +48,7 @@ func sign(secret, data []byte) []byte {
 	return hash.Sum(nil)
 }
 
-func (this *GithubSecretValidator) ServeHTTP(response http.ResponseWriter, request *http.Request) {
+func (this *GithubSignatureValidator) ServeHTTP(response http.ResponseWriter, request *http.Request) {
 	signature := request.Header.Get("X-Hub-Signature")
 	if len(signature) == 0 {
 		fmt.Fprint(os.Stderr, "missing signature\n")
