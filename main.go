@@ -37,7 +37,7 @@ func main() {
 		command := ctx.Args()[0]
 		args := ctx.Args()[1:]
 
-		fmt.Printf("servning on %v\n", address)
+		fmt.Printf("serving on: %v\n", address)
 		handler := http.Handler(&CommandHandler{
 			Command: command,
 			Args:    args,
