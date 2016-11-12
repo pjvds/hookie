@@ -6,6 +6,8 @@ import (
 	"net/http"
 	"net/http/httptest"
 	"testing"
+
+	"github.com/stretchr/testify/assert"
 )
 
 func rawRequest(content string) (*http.Request, error) {
@@ -20,7 +22,9 @@ func mustRawRequest(content string) *http.Request {
 	return request
 }
 
-func TestGithubSecretValidator(t *testing.T) {
+func TestGithubSignatureValidatorAcceptsValidSignature(t *testing.T) {
+	assert := assert.New(t)
+
 	const raw = "POST / HTTP/1.1\n" +
 		"Host: hook.publichost.io\n" +
 		"Accept: */*\n" +
@@ -41,9 +45,11 @@ func TestGithubSecretValidator(t *testing.T) {
 	request := mustRawRequest(raw)
 	response := httptest.NewRecorder()
 
-	sut := GithubSecretValidator{
+	sut := GithubSignatureValidator{
 		Handler: upstreamHandler,
 		Secret:  []byte("123456"),
 	}
 	sut.ServeHTTP(response, request)
+
+	assert.True(invoked, "did not invoke upstream hander")
 }
