@@ -12,6 +12,7 @@ import (
 func main() {
 	app := cli.NewApp()
 	app.Name = "hookie"
+	app.Version = "v1.0"
 	app.Usage = "webhook to script host"
 	app.Flags = []cli.Flag{
 		cli.StringFlag{
