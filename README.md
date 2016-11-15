@@ -11,6 +11,36 @@ Here is an simple example that pull new content from a git repository on every w
 hookie -address "0.0.0.0:80" sh -c 'cd /var/www/site && git fetch --all && git reset --hard origin/master'
 
 ```
+## Installation
+
+Official binary distributions are available for Windows, Mac OS and Linux in both 32 bit (386) and 64 bit (amd64).
+Download the latest version, open a terminal and change the directory to the directory that contains the downloaded archive.
+
+Execute the command, probably with sudo, and make sure `/usr/bin` is in your path `$PATH`.
+
+### Linux (64bit)
+
+```
+tar -C /usr/bin -xzf hookie-$VERSION-linux-amd64.tar.gz
+```
+
+### Linux (32bit)
+
+```
+tar -C /usr/bin -xzf hookie-$VERSION-linux-386.tar.gz
+```
+
+### Mac OS (64bit)
+
+```
+tar -C /usr/bin -xzf hookie-$VERSION-darwin-amd64.tar.gz
+```
+
+### Mac OS (32bit)
+
+```
+tar -C /usr/bin -xzf hookie-$VERSION-darwin-386.tar.gz
+```
 
 ## Github signature validation
 
