@@ -14,7 +14,7 @@ hookie -address "0.0.0.0:80" sh -c 'cd /var/www/site && git fetch --all && git r
 ## Installation
 
 Official binary distributions are available for Windows, Mac OS and Linux in both 32 bit (386) and 64 bit (amd64).
-Download the latest version, open a terminal and change the directory to the directory that contains the downloaded archive.
+Download the [latest version](https://github.com/pjvds/hookie/releases/latest) for your platform, open a terminal and change the directory to the directory that contains the downloaded archive.
 
 Execute the command, probably with sudo, and make sure `/usr/bin` is in your path `$PATH`.
 
