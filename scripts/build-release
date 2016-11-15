@@ -1,0 +1,43 @@
+#!/bin/bash
+
+set -e
+
+VERSION=$1
+
+if [ -z "$1"  ]; then
+    echo "Usage: ${0} VERSION" >> /dev/stderr
+    exit 255
+fi
+
+if ! command -v git >/dev/null; then
+    echo "cannot find git" >> /dev/stderr
+    exit 1
+fi
+
+if ! command -v gox >/dev/null; then
+    echo "cannot find gox" >> /dev/stderr
+    exit 1
+fi
+
+git checkout master
+git reset --hard origin/master
+git checkout $VERSION
+
+build_dir=`mktemp -d`
+
+gox -osarch="linux/amd64" \
+    -osarch="linux/386" \
+    -osarch="windows/amd64" \
+    -osarch="windows/386" \
+    -osarch="darwin/amd64" \
+    -osarch="darwin/386" \
+    -output="$build_dir/hookie-$VERSION-{{.OS}}-{{.Arch}}/hookie" github.com/pjvds/hookie
+
+tar cfz ./releases/hookie-$VERSION-linux-amd64.tar.gz -C $build_dir/hookie-$VERSION-linux-amd64 .
+tar cfz ./releases/hookie-$VERSION-linux-386.tar.gz -C $build_dir/hookie-$VERSION-linux-386 .
+tar cfz ./releases/hookie-$VERSION-darwin-amd64.tar.gz -C $build_dir/hookie-$VERSION-darwin-amd64 .
+tar cfz ./releases/hookie-$VERSION-darwin-386.tar.gz -C $build_dir/hookie-$VERSION-darwin-386 .
+zip -qr ./releases/hookie-$VERSION-windows-amd64.zip $build_dir/hookie-$VERSION-windows-amd64
+zip -qr ./releases/hookie-$VERSION-windows-386.zip $build_dir/hookie-$VERSION-windows-386
+
+rm -rf $build_dir
