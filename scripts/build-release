@@ -24,6 +24,10 @@ git reset --hard origin/master
 git checkout $VERSION
 
 build_dir=`mktemp -d`
+function cleanup_build_dir {
+  rm -rf "$build_dir"
+}
+trap cleanup_build_dir EXIT
 
 gox -osarch="linux/amd64" \
     -osarch="linux/386" \
