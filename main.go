@@ -28,6 +28,11 @@ func main() {
 			Name:  "access-log",
 			Usage: "print access log to stdout",
 		},
+		cli.StringFlag{
+			Name:  "path",
+			Value: "",
+			Usage: "that pattern of the path to match",
+		},
 	}
 	app.Action = func(ctx *cli.Context) error {
 		if len(ctx.Args()) == 0 {
@@ -43,6 +48,13 @@ func main() {
 			Command: command,
 			Args:    args,
 		})
+
+		if path := ctx.String("path"); len(path) > 0 {
+			handler = &PathFilter{
+				Path:    path,
+				Handler: handler,
+			}
+		}
 
 		if secret := ctx.String("github-secret"); len(secret) > 0 {
 			fmt.Printf("github signature validation enabled\n")
