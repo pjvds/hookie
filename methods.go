@@ -7,7 +7,7 @@ type MethodsFilter struct {
 	Handler http.Handler
 }
 
-func (this *MethodsFilter) isAllowed(method string) bool {
+func (this MethodsFilter) isAllowed(method string) bool {
 	for _, allowed := range this.Methods {
 		if method == allowed {
 			return true
@@ -16,8 +16,8 @@ func (this *MethodsFilter) isAllowed(method string) bool {
 	return false
 }
 
-func (this *MethodsFilter) ServeHTTP(response http.ResponseWriter, request *http.Request) {
-	if this.isAllowed(request.Method) {
+func (this MethodsFilter) ServeHTTP(response http.ResponseWriter, request *http.Request) {
+	if !this.isAllowed(request.Method) {
 		response.WriteHeader(http.StatusMethodNotAllowed)
 		return
 	}
