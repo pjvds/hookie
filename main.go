@@ -9,10 +9,12 @@ import (
 	"github.com/urfave/cli"
 )
 
+var version = "undefined"
+
 func main() {
 	app := cli.NewApp()
 	app.Name = "hookie"
-	app.Version = "v1.0"
+	app.Version = version
 	app.Usage = "webhook to script host"
 	app.Flags = []cli.Flag{
 		cli.StringFlag{

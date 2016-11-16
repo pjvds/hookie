@@ -2,13 +2,6 @@
 
 set -e
 
-VERSION=$1
-
-if [ -z "$1"  ]; then
-    echo "Usage: ${0} VERSION" >> /dev/stderr
-    exit 255
-fi
-
 if ! command -v git >/dev/null; then
     echo "cannot find git" >> /dev/stderr
     exit 1
@@ -19,9 +12,8 @@ if ! command -v gox >/dev/null; then
     exit 1
 fi
 
-git checkout master
-git reset --hard origin/master
-git checkout $VERSION
+VERSION=$(git describe --long)
+echo "building version: $VERSION"
 
 build_dir=`mktemp -d`
 function cleanup_build_dir {
@@ -29,7 +21,8 @@ function cleanup_build_dir {
 }
 trap cleanup_build_dir EXIT
 
-gox -osarch="linux/amd64" \
+gox -ldflags "-X main.version='$VERSION'" \
+    -osarch="linux/amd64" \
     -osarch="linux/386" \
     -osarch="windows/amd64" \
     -osarch="windows/386" \
