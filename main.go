@@ -33,6 +33,13 @@ func main() {
 			Value: "",
 			Usage: "that pattern of the path to match",
 		},
+		cli.StringSliceFlag{
+			Name: "methods",
+			Value: &cli.StringSlice{
+				"POST",
+			},
+			Usage: "allowed http methods",
+		},
 	}
 	app.Action = func(ctx *cli.Context) error {
 		if len(ctx.Args()) == 0 {
@@ -52,6 +59,13 @@ func main() {
 		if path := ctx.String("path"); len(path) > 0 {
 			handler = &PathFilter{
 				Path:    path,
+				Handler: handler,
+			}
+		}
+
+		if methods := ctx.StringSlice("methods"); len(methods) > 0 {
+			handler = &MethodsFilter{
+				Methods: methods,
 				Handler: handler,
 			}
 		}
