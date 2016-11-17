@@ -14,32 +14,43 @@ hookie -address "0.0.0.0:80" sh -c 'cd /var/www/site && git fetch --all && git r
 ## Installation
 
 Official binary distributions are available for Windows, Mac OS and Linux in both 32 bit (386) and 64 bit (amd64).
-Download the [latest version](https://github.com/pjvds/hookie/releases/latest) for your platform, open a terminal and change the directory to the directory that contains the downloaded archive.
 
-Execute the command, probably with sudo, and make sure `/usr/bin` is in your path `$PATH`.
+To install hookie you download the [latest version](https://github.com/pjvds/hookie/releases/latest) for your platform and extract the archive to a directory in your `$PATH`.
 
 ### Linux (64bit)
 
 ```
-tar -C /usr/bin -xzf hookie-$VERSION-linux-amd64.tar.gz
+curl -O https://github.com/pjvds/hookie/releases/download/v1.1/hookie-v1.1-linux-amd64.tar.gz
+tar -C /usr/local/bin -xzf hookie-v1.1-linux-amd64.tar.gz
 ```
 
 ### Linux (32bit)
 
 ```
-tar -C /usr/bin -xzf hookie-$VERSION-linux-386.tar.gz
+curl -O https://github.com/pjvds/hookie/releases/download/v1.1/hookie-v1.1-linux-386.tar.gz
+tar -C /usr/local/bin -xzf hookie-v1.1-linux-386.tar.gz
 ```
 
 ### Mac OS (64bit)
 
 ```
-tar -C /usr/bin -xzf hookie-$VERSION-darwin-amd64.tar.gz
+curl -O https://github.com/pjvds/hookie/releases/download/v1.1/hookie-v1.1-darwin-amd64.tar.gz
+tar -C /usr/local/bin -xzf hookie-v1.1-darwin-amd64.tar.gz
 ```
 
 ### Mac OS (32bit)
 
 ```
-tar -C /usr/bin -xzf hookie-$VERSION-darwin-386.tar.gz
+curl -O https://github.com/pjvds/hookie/releases/download/v1.1/hookie-v1.1-darwin-386.tar.gz
+tar -C /usr/local/bin -xzf hookie-v1.1-darwin-386.tar.gz
+```
+
+### Mac OS (via Homebrew)
+
+Alternative you can use homebrew to easily install hookie on Mac OS:
+
+```
+brew install pjvds/homebrew-tools/hookie
 ```
 
 ## Github signature validation
