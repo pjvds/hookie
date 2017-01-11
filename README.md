@@ -1,14 +1,14 @@
 # Hookie
 
-A simple server that turns webhook calls into command execution. This enables simple and effective
-automation scenario's to be scripted in bash script.
+Hookie is a simple server that turns HTTP webhook calls into command execution. This enables simple and effective
+automation scenario's, like pulling the latest changes from Git whenever they are pushed to Github, or pull and start a docker container when it is pushed to the registry.
 
 ## Example
 
-Here is an simple example that pull new content from a git repository on every webhook call:
+Here is an simple example that pulls new content from a git repository on every webhook call:
 
 ```
-hookie -address "0.0.0.0:80" sh -c 'cd /var/www/site && git fetch --all && git reset --hard origin/master'
+hookie sh -c 'cd /var/www/site && git fetch --all && git reset --hard origin/master'
 
 ```
 ## Installation
@@ -64,7 +64,7 @@ You'll need to set up your secret token at Github and configure hookie with it.
 Navigate to the repository where you're setting up your webhook.
 
 1. Navigate to the repository where you're setting up your webhook.
-2. Fill out the Secret textbox. Use a random string with high entropy, for example an GUID from
+2. Fill out the Secret text box. Use a random string with high entropy, for example, a GUID from
    [www.uuidgenerator.net](https://www.uuidgenerator.net/) like `d846f12d-e46e-4d24-bea7-36979223bb4a`.
 3. Click Update Webhook.
 4. Start hookie with the secret token argument: `hookie -secret-token='d846f12d-e46e-4d24-bea7-36979223bb4a' script.sh`
