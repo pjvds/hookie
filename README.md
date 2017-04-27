@@ -20,28 +20,28 @@ To install hookie you download the [latest version](https://github.com/pjvds/hoo
 ### Linux (64bit)
 
 ```
-curl -O https://github.com/pjvds/hookie/releases/download/v1.1/hookie-v1.1-linux-amd64.tar.gz
+curl -L -O https://github.com/pjvds/hookie/releases/download/v1.1/hookie-v1.1-linux-amd64.tar.gz
 tar -C /usr/local/bin -xzf hookie-v1.1-linux-amd64.tar.gz
 ```
 
 ### Linux (32bit)
 
 ```
-curl -O https://github.com/pjvds/hookie/releases/download/v1.1/hookie-v1.1-linux-386.tar.gz
+curl -L -O https://github.com/pjvds/hookie/releases/download/v1.1/hookie-v1.1-linux-386.tar.gz
 tar -C /usr/local/bin -xzf hookie-v1.1-linux-386.tar.gz
 ```
 
 ### Mac OS (64bit)
 
 ```
-curl -O https://github.com/pjvds/hookie/releases/download/v1.1/hookie-v1.1-darwin-amd64.tar.gz
+curl -L -O https://github.com/pjvds/hookie/releases/download/v1.1/hookie-v1.1-darwin-amd64.tar.gz
 tar -C /usr/local/bin -xzf hookie-v1.1-darwin-amd64.tar.gz
 ```
 
 ### Mac OS (32bit)
 
 ```
-curl -O https://github.com/pjvds/hookie/releases/download/v1.1/hookie-v1.1-darwin-386.tar.gz
+curl -L -O https://github.com/pjvds/hookie/releases/download/v1.1/hookie-v1.1-darwin-386.tar.gz
 tar -C /usr/local/bin -xzf hookie-v1.1-darwin-386.tar.gz
 ```
 
